@@ -1,0 +1,47 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org"
+      lang="es">
+<head th:fragment="head">
+  <meta charset="UTF-8">
+  <title>Spring</title>
+  <link th:href="@{/uikit/css/uikit.min.css}" rel="stylesheet">
+</head>
+<body>
+<header th:fragment="header">
+  <nav class="uk-navbar-container">
+    <div class="uk-container">
+      <div uk-navbar>
+
+        <div class="uk-navbar-right">
+
+          <ul class="uk-navbar-nav">
+            <li class="uk-active"><a th:href="@{/login}">Active</a></li>
+            <li>
+              <a href="#">Parent</a>
+              <div class="uk-navbar-dropdown">
+                <ul class="uk-nav uk-navbar-dropdown-nav">
+                  <li class="uk-active"><a href="#">Active</a></li>
+                  <li><a href="#">Item</a></li>
+                  <li><a href="#"></a></li>
+                </ul>
+              </div>
+            </li>
+            <li><a th:href="@{/login}"><span uk-icon="user"> </span> Registrate o Inicia Sesión </a></li>
+          </ul>
+
+        </div>
+
+      </div>
+    </div>
+  </nav>
+  <div class="alert alert-success" th:if="${success !=null}" th:text=${success}></div>
+  <div class="alert alert-danger" th:if="${error !=null}" th:text=${error}></div>
+  <div class="alert alert-warning" th:if="${warning !=null}" th:text=${warning}></div>
+  <div class="alert alert-info" th:if="${info !=null}" th:text=${info}></div>
+</header>
+<footer th:fragment="footer">
+  <script th:src="@{/uikit/js/uikit.min.js}"></script>
+  <script th:src="@{/uikit/js/uikit-icons.min.js}"></script>
+</footer>
+</body>
+</html>

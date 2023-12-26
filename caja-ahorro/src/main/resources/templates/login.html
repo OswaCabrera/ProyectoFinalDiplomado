@@ -1,0 +1,32 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org"
+      lang="es">
+<head th:replace="plantillas/plantilla :: head"></head>
+</head>
+<body>
+    <header th:replace="plantillas/plantilla :: header"></header>
+    <main class="uk-container">
+        <h1>Login</h1>
+        <a th:href="@{/registro}">Alta Usuario</a>
+        <br/><br/>
+        <form method="POST" th:action="@{/autenticacion}" id="loginForm">
+            <div class="uk-margin">
+                <div class="uk-inline uk-width-1-1">
+                    <span class="uk-form-icon uk-form-icon-flip" uk-icon="icon: user"></span>
+                    <label for="username"> </label>
+                    <input class="uk-width-1-1" type="text" name="usuario" id="usuario" />
+                </div>
+            </div>
+            <div class="uk-margin">
+                <div class="uk-inline uk-width-1-1">
+                    <span class="uk-form-icon uk-form-icon-flip" uk-icon="icon: lock"></span>
+                    <label for="password"></label>
+                    <input class="uk-width-1-1" type="password" name="pwd" id="pwd" />
+                </div>
+            </div>
+            <input type="submit" value="Login"/>
+        </form>
+    </main>
+    <footer th:replace="plantillas/plantilla :: footer"></footer>
+</body>
+</html>
