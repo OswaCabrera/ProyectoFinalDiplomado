@@ -18,6 +18,7 @@ public class Cuenta {
     private Integer saldo;
     @Column(name="fecha_apertura")
     private Date fechaCreacion;
+
     @OneToOne(targetEntity=Usuario.class)
     @JoinColumn(name="usuario_id",nullable=false)
     private Usuario usuario;

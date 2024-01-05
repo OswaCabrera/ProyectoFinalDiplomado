@@ -1,0 +1,34 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org"
+      lang="es">
+<head th:replace="plantillas/plantilla :: head"></head>
+</head>
+<body>
+    <header th:replace="plantillas/plantilla :: header"></header>
+    <main class="uk-container">
+        <h2>Solicitud de Prestamo</h2>
+        <div class="uk-card uk-card-default uk-card-body">
+            <form th:action="@{/usuario/solicitar-prestamo}" th:object="${prestamo}" method="post">
+                <div class="uk-margin">
+                    <label class="uk-form-label" for="montoOriginal">Monto</label>
+                    <div class="uk-form-controls">
+                        <input class="uk-input" id="montoOriginal" name="montoOriginal" type="number" th:field="*{montoOriginal}" placeholder="Monto Original" required="required"/>
+                    </div>
+                </div>
+                <div class="uk-margin">
+                    <label class="uk-form-label" for="mensualidades">Número de meses</label>
+                    <div class="uk-form-controls">
+                        <input class="uk-input" id="mensualidades" name="mensualidades" type="number" th:field="*{mensualidades}" placeholder="Mensualidades" required="required"/>
+                    </div>
+                </div>
+                <div class="uk-alert-warning" uk-alert>
+                    <a href class="uk-alert-close" uk-close></a>
+                    <p>La tasa de interés es de 8%</p>
+                </div>
+                <button type="submit" class="uk-button uk-button-default">Solicitar</button>
+            </form>
+        </div>
+    </main>
+    <footer th:replace="plantillas/plantilla :: footer"></footer>
+</body>
+</html>

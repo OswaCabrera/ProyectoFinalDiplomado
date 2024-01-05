@@ -1,0 +1,53 @@
+<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml"
+	xmlns:th="http://www.thymeleaf.org">
+<head>
+<title>Pixup</title>
+</head>
+<body>
+	<header th:fragment="header">
+		<nav class="uk-navbar-container">
+			<div class="uk-container">
+				<div uk-navbar>
+
+					<div class="uk-navbar-right">
+
+						<ul class="uk-navbar-nav">
+							<li><a th:href="@{/login}"><span uk-icon="user"> </span> Registrate o Inicia Sesión </a></li>
+						</ul>
+
+					</div>
+
+				</div>
+			</div>
+		</nav>
+		<div class="alert alert-success" th:if="${success !=null}" th:text=${success}></div>
+		<div class="alert alert-danger" th:if="${error !=null}" th:text=${error}></div>
+		<div class="alert alert-warning" th:if="${warning !=null}" th:text=${warning}></div>
+		<div class="alert alert-info" th:if="${info !=null}" th:text=${info}></div>
+	</header>
+	<h1>Registro Usuario</h1>
+	<form method="POST" th:action="@{/registro}">
+		<h3>Datos Personales</h3>
+		<label for="usuario.nombre">Nombre: </label>
+		<input type="text" th:field="${usuario.nombre}"/>
+      	<br/>
+      	<label for="usuario.apellidoPaterno">Apellido Paterno: </label>
+		<input type="text" th:field="${usuario.apellidoPaterno}"/>
+      	<br/>
+      	<label for="usuario.apellidoMaterno">Apellido Materno: </label>
+		<input type="text" th:field="${usuario.apellidoMaterno}"/>
+      	<br/>
+      	<label for="usuario.password">Password: </label>
+		<input type="password" th:field="${usuario.password}"/>
+      	<br/>
+      	<label for="usuario.email">Email: </label>
+		<input type="text" th:field="${usuario.email}"/>
+      	<br/>
+      	<label for="usuario.numeroTelefonico">RFC: </label>
+		<input type="text" th:field="${usuario.numeroTelefonico}"/>
+      	<br/>
+      	<button type="submit">Crear Cuenta</button>
+	</form>
+</body>
+</html>

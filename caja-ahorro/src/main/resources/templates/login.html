@@ -4,28 +4,46 @@
 <head th:replace="plantillas/plantilla :: head"></head>
 </head>
 <body>
-    <header th:replace="plantillas/plantilla :: header"></header>
-    <main class="uk-container">
-        <h1>Login</h1>
-        <a th:href="@{/registro}">Alta Usuario</a>
-        <br/><br/>
-        <form method="POST" th:action="@{/autenticacion}" id="loginForm">
-            <div class="uk-margin">
-                <div class="uk-inline uk-width-1-1">
-                    <span class="uk-form-icon uk-form-icon-flip" uk-icon="icon: user"></span>
-                    <label for="username"> </label>
-                    <input class="uk-width-1-1" type="text" name="usuario" id="usuario" />
-                </div>
-            </div>
-            <div class="uk-margin">
-                <div class="uk-inline uk-width-1-1">
-                    <span class="uk-form-icon uk-form-icon-flip" uk-icon="icon: lock"></span>
-                    <label for="password"></label>
-                    <input class="uk-width-1-1" type="password" name="pwd" id="pwd" />
-                </div>
-            </div>
-            <input type="submit" value="Login"/>
-        </form>
+	<header th:fragment="header">
+		<nav class="uk-navbar-container">
+			<div class="uk-container">
+				<div uk-navbar>
+
+					<div class="uk-navbar-right">
+
+						<ul class="uk-navbar-nav">
+							<li><a th:href="@{/login}"><span uk-icon="user"> </span> Registrate o Inicia Sesión </a></li>
+						</ul>
+
+					</div>
+
+				</div>
+			</div>
+		</nav>
+		<div class="alert alert-success" th:if="${success !=null}" th:text=${success}></div>
+		<div class="alert alert-danger" th:if="${error !=null}" th:text=${error}></div>
+		<div class="alert alert-warning" th:if="${warning !=null}" th:text=${warning}></div>
+		<div class="alert alert-info" th:if="${info !=null}" th:text=${info}></div>
+	</header>
+    <main class="container text-center">
+		<div class="uk-container">
+			<h1>Login</h1>
+			<a th:href="@{/registro}">Alta Usuario</a>
+			<br/><br/>
+			<form method="POST" th:action="@{/autenticacion}" id="loginForm">
+				<label for="username">Usuario: </label>
+				<div class="uk-margin">
+				<input class="uk-width-1-2@s uk-input uk-form-width-medium uk-form-large" type="text" name="usuario" id="usuario" />
+				<br/>
+				</div>
+				<label for="password">Password: </label>
+				<div class="uk-margin">
+				<input class="uk-width-1-2@s uk-input uk-form-width-medium uk-form-large" type="password" name="pwd" id="pwd" />
+				<br/>
+				</div>
+				<input class="uk-button uk-button-default" type="submit" value="Login"/>
+			</form>
+		</div>
     </main>
     <footer th:replace="plantillas/plantilla :: footer"></footer>
 </body>

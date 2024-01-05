@@ -1,0 +1,37 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org"
+      lang="es">
+<head th:replace="plantillas/plantilla :: head"></head>
+</head>
+<body>
+    <header th:replace="plantillas/plantilla :: header"></header>
+    <main class="uk-container">
+        <div>
+            <h3>
+                <a th:href="@{/usuario/solicitar-prestamo}">Solicitar un prestamo</a>
+            </h3>
+        </div>
+        <div  th:unless="${#lists.isEmpty(prestamos)}">
+            <table class="uk-table uk-table-striped">
+                <thead>
+                    <tr>
+                        <th>Monto solicitado</th>
+                        <th>Mensualidades</th>
+                        <th>Fecha de solicitud</th>
+                        <th>Estado</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <tr th:each="prestamo : ${prestamos}">
+                        <td th:text="${prestamo.montoOriginal}"></td>
+                        <td th:text="${prestamo.mensualidades}"></td>
+                        <td th:text="${prestamo.fechaPeticion}"></td>
+                        <td th:text="${prestamo.estatusPrestamoId.nombre}"></td>
+                    </tr>
+                </tbody>
+            </table>
+        </div>
+    </main>
+    <footer th:replace="plantillas/plantilla :: footer"></footer>
+</body>
+</html>

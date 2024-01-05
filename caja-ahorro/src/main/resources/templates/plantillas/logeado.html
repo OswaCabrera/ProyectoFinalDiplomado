@@ -8,25 +8,19 @@
 </head>
 <body>
 <header th:fragment="header">
-  <nav class="uk-navbar-container uk-margin-small-right" uk-navbar>
-    <div class="uk-navbar-right">
-      <ul class="uk-navbar-nav">
-        <li><a th:href="@{/usuario/prestamos}">Prestamos</a></li>
-        <li ><a th:href="@{/usuario/pagos}">Pagos o abonos</a></li>
-        <li>
-          <a th:text="${usuario.nombre}" href="#">Bienvenido </a>
-          <div class="uk-navbar-dropdown">
-            <ul class="uk-nav uk-navbar-dropdown-nav">
-              <li>
-                <a href="#">
-                  <form method="POST" th:action="@{/logout}">
-                    <input type="submit" value="Cerrar sesión"/>
-                  </form>
-                </a></li>
-            </ul>
-          </div>
-        </li>
-      </ul>
+  <nav class="uk-navbar-container">
+    <div class="uk-container">
+      <div uk-navbar>
+
+        <div class="uk-navbar-right">
+
+          <ul class="uk-navbar-nav">
+            <li><a th:href="@{/login}"><span uk-icon="user"> </span> Registrate o Inicia Sesión </a></li>
+          </ul>
+
+        </div>
+
+      </div>
     </div>
   </nav>
   <div class="alert alert-success" th:if="${success !=null}" th:text=${success}></div>
