@@ -12,6 +12,11 @@ spring:
         dialect: org.hibernate.dialect.MariaDBDialect
         format_sql: true
 
+#ruta de archivos
+ejemplo:
+  imagen:
+    ruta: /Users/oswaldocabreraperez/Documents/DiplomadoJava/imagenes
+
 server:
   port: 8080
 

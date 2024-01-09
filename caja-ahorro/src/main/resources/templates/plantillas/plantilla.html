@@ -11,10 +11,29 @@
   <nav class="uk-navbar-container uk-margin-small-right" uk-navbar>
     <div class="uk-navbar-right">
       <ul class="uk-navbar-nav">
+        <li>
+          <a th:if="${usuario.rol.id == 1}">Herramientas de administración</a>
+          <div class="uk-navbar-dropdown">
+            <ul class="uk-nav uk-navbar-dropdown-nav">
+              <li>
+                <a href="#">Usuarios</a>
+              </li>
+              <li>
+                  <a href="#">Prestamos</a>
+              </li>
+              <li>
+                  <a href="#">Transacciones</a>
+              </li>
+              <li>
+                  <a href="#">Estadísticas</a>
+              </li>
+            </ul>
+          </div>
+        </li>
         <li><a th:href="@{/usuario/prestamos}">Prestamos</a></li>
         <li ><a th:href="@{/usuario/pagos}">Pagos o abonos</a></li>
         <li>
-          <a th:text="${usuario.nombre}" href="#">Bienvenido </a>
+          <a th:text="${usuario.nombre}" th:href="@{/usuario/perfil}">Bienvenido </a>
           <div class="uk-navbar-dropdown">
             <ul class="uk-nav uk-navbar-dropdown-nav">
               <li>
@@ -22,7 +41,8 @@
                   <form method="POST" th:action="@{/logout}">
                     <input type="submit" value="Cerrar sesión"/>
                   </form>
-                </a></li>
+                </a>
+              </li>
             </ul>
           </div>
         </li>

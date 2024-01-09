@@ -8,8 +8,29 @@
     <main class="uk-container">
       <div>
         <h3>
-          <a th:href="@{/usuario/registrar-pago}">Resgistrar pago o abono a la cuenta</a>
+          <a th:href="@{/usuario/registrar-abono}">Abonar a cuenta</a>
         </h3>
+      </div>
+        <div  th:unless="${#lists.isEmpty(transacciones)}">
+            <table class="uk-table uk-table-striped">
+                <thead>
+                    <tr>
+                        <th>Fecha</th>
+                        <th>Concepto</th>
+                        <th>Monto</th>
+                        <th>Estatus</th>
+                    </tr>
+                </thead>
+                <tbody>
+                <tr th:each="transaccion : ${transacciones}">
+                    <td th:text="${transaccion.fecha}"></td>
+                    <td th:text="${transaccion.tipoTransaccionId.nombre}"></td>
+                    <td th:text="${transaccion.monto}"></td>
+                    <td th:text="${transaccion.estatusTransaccionId.nombre}"></td>
+                </tr>
+                </tbody>
+            </table>
+
       </div>
     </main>
     <footer th:replace="plantillas/plantilla :: footer"></footer>

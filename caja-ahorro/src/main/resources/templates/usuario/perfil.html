@@ -8,6 +8,10 @@
     <main class="uk-container">
         <div class="uk-section uk-section-muted uk-margin-top uk-padding-small">
             <h1>Tu perfil</h1>
+            <a th:href="@{/usuario/editar-perfil}">Modificar perfil</a>
+            <div>
+                <img th:src="@{'/imagenes/'+${usuario.fotografia}}">
+            </div>
             <div>
                 <h3>Nombre: <span th:text="${usuario.nombre}"></span></h3>
             </div>
@@ -25,7 +29,7 @@
             </div>
         </div>
         <div class="uk-section uk-section-muted uk-margin-top uk-padding-small">
-            <h3>Datos de la cuenta</h3>
+            <h1>Datos de la cuenta</h1>
             <div>
                 <h3>Número de cuenta: <span th:text="${cuenta.id}"></span> </h3>
             </div>

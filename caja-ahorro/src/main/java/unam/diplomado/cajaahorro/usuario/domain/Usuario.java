@@ -25,6 +25,7 @@ public class Usuario implements UserDetails {
     private String apellidoPaterno;
     @Column(name = "apellido_materno")
     private String apellidoMaterno;
+    private String fotografia;
     private String email;
     private String password;
     @Column(name = "numero_telefonico")

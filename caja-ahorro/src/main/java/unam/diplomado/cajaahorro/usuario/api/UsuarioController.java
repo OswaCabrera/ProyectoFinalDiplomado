@@ -1,19 +1,25 @@
 package unam.diplomado.cajaahorro.usuario.api;
 
 
+import jakarta.servlet.http.HttpSession;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.beans.factory.annotation.Value;
 import org.springframework.security.core.annotation.AuthenticationPrincipal;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.*;
+import org.springframework.web.multipart.MultipartFile;
 import unam.diplomado.cajaahorro.prestamo.domain.Prestamo;
 import unam.diplomado.cajaahorro.prestamo.service.PrestamoService;
+import unam.diplomado.cajaahorro.transaccion.domain.Transaccion;
+import unam.diplomado.cajaahorro.transaccion.domain.TransaccionAbonoAhorro;
+import unam.diplomado.cajaahorro.transaccion.domain.TransaccionPagoPrestamo;
+import unam.diplomado.cajaahorro.transaccion.service.TransaccionService;
 import unam.diplomado.cajaahorro.usuario.domain.Cuenta;
 import unam.diplomado.cajaahorro.usuario.domain.Usuario;
 import unam.diplomado.cajaahorro.usuario.service.CuentaService;
 import unam.diplomado.cajaahorro.usuario.service.UsuarioService;
+import unam.diplomado.cajaahorro.util.Archivos;
 
 import java.util.List;
 
@@ -27,6 +33,15 @@ public class UsuarioController  {
     @Autowired
     private PrestamoService prestamoService;
 
+    @Autowired
+    private TransaccionService transaccionService;
+
+    @Autowired
+    private UsuarioService usuarioService;
+
+    @Value("${ejemplo.imagen.ruta}")
+    private String archivoRuta;
+
     //A route to show the user's profile
     @RequestMapping("/perfil")
     public String profile(Model model,
@@ -34,8 +49,6 @@ public class UsuarioController  {
         model.addAttribute("usuario", usuario);
         Cuenta cuenta = cuentaService.buscarCuentaPorUsuario(usuario.getId());
         model.addAttribute("cuenta", cuenta);
-        System.out.println("Cuenta: " + cuenta);
-        System.out.println("Usuario: " + usuario);
         return "usuario/perfil";
     }
 
@@ -68,9 +81,86 @@ public class UsuarioController  {
     }
 
     @GetMapping("/pagos")
-    public String registrarPago(Model model,
+    public String mostrarPagos(Model model,
                                 @AuthenticationPrincipal Usuario usuario) {
         model.addAttribute("usuario", usuario);
+        List<Transaccion> transacciones = transaccionService.buscarTransaccionesPorCuenta(cuentaService.buscarCuentaPorUsuario(usuario.getId()));
+        model.addAttribute("transacciones", transacciones);
+        //System.out.println("Transacciones: " + transacciones);
         return "usuario/pagos";
+    }
+
+    @GetMapping("/registrar-abono")
+    public String registrarAbono(Model model,
+                                @AuthenticationPrincipal Usuario usuario) {
+        model.addAttribute("usuario", usuario);
+        model.addAttribute("transaccion", new TransaccionAbonoAhorro());
+        return "usuario/registrar-pago";
+    }
+
+    @PostMapping("/registrar-abono")
+    public String registrarAbono(@ModelAttribute("transaccion") TransaccionAbonoAhorro transaccion, @RequestParam(value = "comprobanteImagen") MultipartFile multipartFile, @AuthenticationPrincipal Usuario usuario) {
+        System.out.println("Transaccion: " + transaccion);
+        if(!multipartFile.isEmpty()){
+            String imagenNombre= Archivos.almacenar(multipartFile,archivoRuta);
+            if(imagenNombre!=null){
+                transaccion.setComprobante(imagenNombre);
+            }
+        }
+        transaccionService.guardarTransaccion(transaccion, usuario);
+        return "redirect:/usuario/pagos";
+    }
+
+    @GetMapping("/pagar-prestamo/{id}")
+    public String registrarPago(@PathVariable("id") Integer id, Model model,
+                                @AuthenticationPrincipal Usuario usuario){
+        model.addAttribute("usuario", usuario);
+        TransaccionPagoPrestamo transaccion = new TransaccionPagoPrestamo();
+        transaccion.setPrestamoId(prestamoService.buscarPrestamoPorId(id));
+        model.addAttribute("transaccion", transaccion);
+        return "usuario/pagar-prestamo";
+    }
+
+    @PostMapping("/pagar-prestamo")
+    public String registrarPago(@ModelAttribute("transaccion") TransaccionPagoPrestamo transaccion,@RequestParam(value = "comprobanteImagen") MultipartFile multipartFile, @AuthenticationPrincipal Usuario usuario) {
+        if(!multipartFile.isEmpty()){
+            String imagenNombre= Archivos.almacenar(multipartFile,archivoRuta);
+            if(imagenNombre!=null){
+                transaccion.setComprobante(imagenNombre);
+            }
+        }
+        Transaccion tranCreada = transaccionService.guardarTransaccion(transaccion, usuario);
+        if(tranCreada.getComprobante()!=null || !tranCreada.getComprobante().isEmpty()){
+            String archivo = tranCreada.getComprobante();
+            String nuevoArchivo = tranCreada.getId()+"_"+archivo;
+            Archivos.renombrar(archivoRuta,archivo,nuevoArchivo);
+            tranCreada.setComprobante(nuevoArchivo);
+            transaccionService.actualizar(tranCreada);
+        }
+        return "redirect:/usuario/pagos";
+    }
+
+
+    @PostMapping("/editar-perfil")
+    public String editarPerfil(@ModelAttribute("usuarioObject") Usuario usuarioObject, @RequestParam(value = "fotografiaPerfil") MultipartFile multipartFile, @AuthenticationPrincipal Usuario usuario) {
+        if(!multipartFile.isEmpty()){
+            String imagenNombre= Archivos.almacenar(multipartFile,archivoRuta);
+            if(imagenNombre!=null){
+                usuarioObject.setFotografia(usuarioObject.getId() + "_" + imagenNombre);
+                Archivos.renombrar(archivoRuta,imagenNombre,usuarioObject.getFotografia());
+            }
+        }
+        System.out.println("Mi UsuarioObject: " + usuarioObject);
+        usuarioService.actualizar(usuarioObject);
+        return "redirect:/usuario/perfil";
+    }
+
+    @GetMapping("/editar-perfil")
+    public String editarPerfil(Model model,
+                               @AuthenticationPrincipal Usuario usuario) {
+        Usuario usuarioObject = usuarioService.buscarPorId(usuario.getId());
+        model.addAttribute("usuarioObject", usuarioObject);
+        model.addAttribute("usuario", usuario);
+        return "usuario/editar-perfil";
     }
 }

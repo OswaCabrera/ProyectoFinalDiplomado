@@ -33,4 +33,9 @@ public class PrestamoServiceImpl implements PrestamoService{
         System.out.println("Prestamo: " + prestamo);
         prestamoRepository.save(prestamo);
     }
+
+    @Override
+    public Prestamo buscarPrestamoPorId(Integer id) {
+        return prestamoRepository.findById(id).get();
+    }
 }

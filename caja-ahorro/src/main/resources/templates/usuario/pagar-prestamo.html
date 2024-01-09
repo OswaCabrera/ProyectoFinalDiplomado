@@ -1,0 +1,30 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org"
+      lang="es">
+<head th:replace="plantillas/plantilla :: head"></head>
+</head>
+<body>
+    <header th:replace="plantillas/plantilla :: header"></header>
+    <main class="uk-container">
+        <div>
+            <form th:action="@{/usuario/pagar-prestamo}" th:object="${transaccion}" method="post" enctype="multipart/form-data">
+                <div class="uk-margin">
+                    <label class="uk-form-label" for="monto">Monto</label>
+                    <div class="uk-form-controls">
+                        <input class="uk-input" id="monto" name="monto" type="number" th:field="*{monto}" placeholder="Monto Original" required="required"/>
+                    </div>
+                </div>
+                <div class="uk-margin">
+                    <label for="comprobanteImagen">Subir imagen (opcional)</label>
+                    <div class="input-group mb-1">
+                        <input type="file" class="form-control" id="comprobanteImagen" name="comprobanteImagen"/>
+                    </div>
+                </div>
+                <input type="hidden" name="prestamoId" th:field="*{prestamoId}"/>
+                <button type="submit" class="uk-button uk-button-default">Enviar</button>
+            </form>
+        </div>
+    </main>
+    <footer th:replace="plantillas/plantilla :: footer"></footer>
+</body>
+</html>

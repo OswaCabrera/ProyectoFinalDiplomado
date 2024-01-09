@@ -10,4 +10,6 @@ public interface PrestamoService {
     List<Prestamo> buscarPrestamosPorUsuario(Usuario usuario);
 
     void solicitarPrestamo(Prestamo prestamo);
+
+    Prestamo buscarPrestamoPorId(Integer id);
 }

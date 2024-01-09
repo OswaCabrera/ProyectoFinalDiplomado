@@ -1,0 +1,31 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org"
+      lang="es">
+<head th:replace="plantillas/plantilla :: head"></head>
+</head>
+<body>
+    <header th:replace="plantillas/plantilla :: header"></header>
+    <main class="uk-container">
+        <div class="uk-card">
+            <div class="uk-card-body">
+                <form th:action="@{/usuario/registrar-abono}" th:object="${transaccion}" method="post" enctype="multipart/form-data">
+                    <div class="uk-margin">
+                        <label class="uk-form-label" for="monto">Monto</label>
+                        <div class="uk-form-controls">
+                            <input class="uk-input" id="monto" name="monto" type="number" th:field="*{monto}" placeholder="Monto Original" required="required"/>
+                        </div>
+                    </div>
+                    <div class="uk-margin">
+                        <label for="comprobanteImagen">Subir comprobante</label>
+                        <div class="input-group mb-1">
+                            <input type="file" class="form-control" id="comprobanteImagen" name="comprobanteImagen"/>
+                        </div>
+                    </div>
+                    <button type="submit" class="uk-button uk-button-default">Enviar</button>
+                </form>
+            </div>
+        </div>
+    </main>
+    <footer th:replace="plantillas/plantilla :: footer"></footer>
+</body>
+</html>

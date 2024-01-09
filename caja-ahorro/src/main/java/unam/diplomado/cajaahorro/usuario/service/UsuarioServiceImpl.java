@@ -48,32 +48,15 @@ public class UsuarioServiceImpl implements UsuarioService{
         return usuario;
     }
 
-    /*
     @Override
-    @Transactional(propagation= Propagation.REQUIRED, timeout=5)
-    public Usuario registrarUsuario(Usuario usuario, Cuenta cuenta) {
-        Optional<Usuario> usuarioExistente =
-                usuarioRepository.findByEmail(usuario.getEmail());
-        if (usuarioExistente.isPresent()) {
-            throw new UsuarioAlreadyExistsException(usuario.getEmail());
-        }
-        Optional<Rol> rolExistente =
-                rolRepository.findById(usuario.getRol().getId());
-        if (rolExistente.isEmpty()) {
-            throw new RolNotFoundException(usuario.getRol().getId());
-        }
-        Optional<EstatusCuenta> estatusCuentaExistente =
-                estatusCuentaRepository.findById(cuenta.getEstatusCuenta().getId());
-        if (estatusCuentaExistente.isEmpty()) {
-            throw new EstatusCuentaNotFoundException(cuenta.getEstatusCuenta().getId());
-        }
-        usuario.setRol(rolExistente.get());
+    public void actualizar(Usuario usuario) {
         usuarioRepository.save(usuario);
-        cuenta.setEstatusCuenta(estatusCuentaExistente.get());
-        cuenta.setUsuario(usuario);
-        cuentaRepository.save(cuenta);
-        return usuario;
     }
 
-     */
+    @Override
+    public Usuario buscarPorId(Integer id) {
+        Optional<Usuario> usuario = usuarioRepository.findById(id);
+        return usuario.get();
+    }
+
 }

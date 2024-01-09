@@ -19,6 +19,7 @@
                         <th>Mensualidades</th>
                         <th>Fecha de solicitud</th>
                         <th>Estado</th>
+                        <th>Acciones</th>
                     </tr>
                 </thead>
                 <tbody>
@@ -27,6 +28,10 @@
                         <td th:text="${prestamo.mensualidades}"></td>
                         <td th:text="${prestamo.fechaPeticion}"></td>
                         <td th:text="${prestamo.estatusPrestamoId.nombre}"></td>
+                        <td>
+                            <a th:href="@{/usuario/pagar-prestamo/{id} (id=${prestamo.id})}"
+                               class="uk-button uk-button-primary" ><i class="fas fa-pencil-alt" aria-hidden="true"></i>Pagar</a>
+                        </td>
                     </tr>
                 </tbody>
             </table>
