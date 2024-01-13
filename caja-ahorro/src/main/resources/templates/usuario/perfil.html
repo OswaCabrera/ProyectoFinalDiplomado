@@ -2,32 +2,29 @@
 <html xmlns:th="http://www.thymeleaf.org"
       lang="es">
 <head th:replace="plantillas/plantilla :: head"></head>
-</head>
 <body>
     <header th:replace="plantillas/plantilla :: header"></header>
     <main class="uk-container">
-        <div class="uk-section uk-section-muted uk-margin-top uk-padding-small">
             <h1>Tu perfil</h1>
-            <a th:href="@{/usuario/editar-perfil}">Modificar perfil</a>
-            <div th:if="${usuario.fotografia != null}">
-                <img th:src="@{'/imagenes/'+${usuario.fotografia}}">
+        <div>
+                <div class="uk-flex">
+                    <div class="uk-card-media-top" th:if="${usuario.fotografia != null}">
+                        <img th:src="@{'/imagenes/'+${usuario.fotografia}}" width="200" height="200" class="uk-border-circle" >
+                    </div>
+                    <div class="uk-card-body">
+                        <h2><span th:text="${usuario.nombre}"></span> <span th:text="${usuario.apellidoPaterno}"></span>  <span th:text="${usuario.apellidoMaterno}"></span></h2>
+                    </div>
+                </div>
+                <div class="uk-margin-top">
+                    <h3>Email: <span th:text="${usuario.email}"></span></h3>
+                </div>
+                <div>
+                    <h3>Teléfono: <span th:text="${usuario.numeroTelefonico}"></span></h3>
+                </div>
+                <div>
+                    <a th:href="@{/usuario/editar-perfil}">Modificar perfil o actualizar foto</a>
+                </div>
             </div>
-            <div>
-                <h3>Nombre: <span th:text="${usuario.nombre}"></span></h3>
-            </div>
-            <div>
-                <h3>Apellido Paterno: <span th:text="${usuario.apellidoPaterno}"></span></h3>
-            </div>
-            <div>
-                <h3>Apellido Materno: <span th:text="${usuario.apellidoMaterno}"></span></h3>
-            </div>
-            <div>
-                <h3>Email: <span th:text="${usuario.email}"></span></h3>
-            </div>
-            <div>
-                <h3>Teléfono: <span th:text="${usuario.numeroTelefonico}"></span></h3>
-            </div>
-        </div>
         <div class="uk-section uk-section-muted uk-margin-top uk-padding-small">
             <h1>Datos de la cuenta</h1>
             <div>
