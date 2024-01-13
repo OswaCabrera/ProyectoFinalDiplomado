@@ -1,0 +1,40 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org"
+      lang="es">
+<head th:replace="plantillas/plantilla :: head"></head>
+</head>
+<body>
+    <header th:replace="plantillas/plantilla :: header"></header>
+    <main class="uk-container">
+        <div>
+            <h1>Datos del usuario</h1>
+            <div>
+                <div class="uk-card uk-card-default uk-card-body">
+                    <h3 class="uk-card-title">Datos personales</h3>
+                    <p>Nombre: <span th:text="${usuario.nombre}"></span></p>
+                    <p>Apellido paterno: <span th:text="${usuario.apellidoPaterno}"></span></p>
+                    <p>Apellido materno: <span th:text="${usuario.apellidoMaterno}"></span></p>
+                    <p>Correo: <span th:text="${usuario.email}"></span></p>
+                    <p>Teléfono: <span th:text="${usuario.numeroTelefonico}"></span></p>
+                </div>
+                <div class="uk-card uk-card-default uk-card-body uk-margin-top">
+                    <h3 class="uk-card-title">Datos de la cuenta</h3>
+                    <div>
+                        <p>Número de cuenta: <span th:text="${cuenta.id}"></span> </p>
+                    </div>
+                    <div>
+                        <p>Saldo: <span th:text="${cuenta.saldo}"></span> </p>
+                    </div>
+                    <div>
+                        <p>Fecha de apertura: <span th:text="${cuenta.fechaCreacion}"></span> </p>
+                    </div>
+                    <div>
+                        <p>Estatus de la cuenta: <span th:text="${cuenta.estatusCuenta.nombre}"></span> </p>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </main>
+    <footer th:replace="plantillas/plantilla :: footer"></footer>
+</body>
+</html>

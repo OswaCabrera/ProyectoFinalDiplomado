@@ -19,4 +19,9 @@ public class CuentaServiceImpl implements CuentaService{
     public Cuenta buscarCuentaPorUsuario(Integer idUsuario) {
         return cuentaRepository.findByUsuarioId(idUsuario);
     }
+
+    @Override
+    public Cuenta actualizar(Cuenta cuenta) {
+        return cuentaRepository.save(cuenta);
+    }
 }

@@ -1,0 +1,95 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org"
+      lang="es">
+<head th:replace="plantillas/plantilla :: head"></head>
+</head>
+<body>
+    <header th:replace="plantillas/plantilla :: header"></header>
+    <main class="uk-container">
+        <div>
+            <h1>Información del prestamo</h1>
+            <div class="uk-section uk-section-muted uk-padding-small">
+                <h2>Datos</h2>
+                    <div class="uk-grid-match uk-child-width-1-3@m" uk-grid>
+                        <div>
+                            <div class="uk-card uk-card-default uk-card-body">
+                                <h3 class="uk-card-title">Solicitante</h3>
+                                <p><span th:text="${prestamo.getUsuarioId().getNombre()}"></span> <span th:text="${prestamo.getUsuarioId().getApellidoPaterno()}"></span> <span th:text="${prestamo.getUsuarioId().getApellidoPaterno()}"></span></p>
+                            </div>
+                        </div>
+                        <div>
+                            <div class="uk-card uk-card-default uk-card-body">
+                                <h3 class="uk-card-title">Monto</h3>
+                                <p><span th:text="${prestamo.getMontoOriginal()}"></span></p>
+                            </div>
+                        </div>
+                        <div>
+                            <div class="uk-card uk-card-default uk-card-body">
+                                <h3 class="uk-card-title">Interés</h3>
+                                <p><span th:text="${prestamo.getInteres()}"></span></p>
+                            </div>
+                        </div>
+                        <div>
+                            <div class="uk-card uk-card-default uk-card-body">
+                                <h3 class="uk-card-title">Fecha de petición</h3>
+                                <p><span th:text="${prestamo.getFechaPeticion()}"></span></p>
+                            </div>
+                        </div>
+                        <div>
+                            <div class="uk-card uk-card-default uk-card-body">
+                                <h3 class="uk-card-title">Monto Final</h3>
+                                <p><span th:text="${prestamo.getMontoPagar()}"></span></p>
+                            </div>
+                        </div>
+                        <div>
+                            <div class="uk-card uk-card-default uk-card-body">
+                                <h3 class="uk-card-title">Cantidad Pagada hasta el momento</h3>
+                                <p><span th:text="${prestamo.getCantidadPagada()}"></span></p>
+                            </div>
+                        </div>
+                        <div>
+                            <div class="uk-card uk-card-default uk-card-body">
+                                <h3 class="uk-card-title">Mensualidades</h3>
+                                <p><span th:text="${prestamo.getMensualidades()}"></span></p>
+                            </div>
+                        </div>
+                        <div>
+                            <div class="uk-card uk-card-default uk-card-body">
+                                <h3 class="uk-card-title">Estatus</h3>
+                                <p>
+                                    <span th:if="${prestamo.estatusPrestamoId.id == 3}" class="uk-label uk-label-danger" th:text="${prestamo.getEstatusPrestamoId().getNombre()}"></span>
+                                    <span th:if="${prestamo.estatusPrestamoId.id == 1}" class="uk-label uk-label-warning" th:text="${prestamo.getEstatusPrestamoId().getNombre()}"></span>
+                                    <span th:if="${prestamo.estatusPrestamoId.id == 4}" class="uk-label uk-label-success" th:text="${prestamo.getEstatusPrestamoId().getNombre()}"></span>
+                                    <span th:if="${prestamo.estatusPrestamoId.id == 2}" class="uk-label uk-label-success" th:text="${prestamo.getEstatusPrestamoId().getNombre()}"></span>
+                                    <span th:if="${prestamo.estatusPrestamoId.id == 5}" class="uk-label uk-label-success" th:text="${prestamo.getEstatusPrestamoId().getNombre()}"></span>
+                                </p>
+                            </div>
+                        </div>
+                        <div th:if="${prestamo.getEstatusPrestamoId().getId() == 1}" class="uk-width-expand">
+                            <div class="uk-card uk-card-default uk-card-body">
+                                <h3 class="uk-card-title">El prestamo sigue esperando confirmación</h3>
+                                <form th:action="@{/prestamo/actualizar-prestamo-estatus}" th:object="${prestamo}" method="post">
+                                    <div class="uk-margin">
+                                        <label for="aceptar">Aceptar Prestamo</label>
+                                        <div class="input-group mb-1">
+                                            <input type="radio" class="form-control" id="aceptar" name="decision" value="aceptar">
+                                        </div>
+                                    </div>
+                                    <div class="uk-margin">
+                                        <label for="rechazar">Rechazar Prestamo</label>
+                                        <div class="input-group mb-1">
+                                            <input type="radio" class="form-control" id="rechazar" name="decision" value="rechazar">
+                                        </div>
+                                    </div>
+                                    <input type="hidden" name="id" th:field="${prestamo.id}"/>
+                                    <button type="submit" class="uk-button uk-button-default">Enviar</button>
+                                </form>
+                            </div>
+                        </div>
+                    </div>
+            </div>
+        </div>
+    </main>
+    <footer th:replace="plantillas/plantilla :: footer"></footer>
+</body>
+</html>

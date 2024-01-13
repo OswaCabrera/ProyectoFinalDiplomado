@@ -16,24 +16,24 @@
           <div class="uk-navbar-dropdown">
             <ul class="uk-nav uk-navbar-dropdown-nav">
               <li>
-                <a href="#">Usuarios</a>
+                <a th:href="@{/admin/lista-usuarios}">USUARIOS</a>
               </li>
               <li>
-                  <a href="#">Prestamos</a>
+                  <a th:href="@{/prestamo/lista-prestamos}">PRESTAMOS</a>
               </li>
               <li>
-                  <a href="#">Transacciones</a>
+                  <a th:href="@{/transaccion/lista-transacciones}">TRANSACCIONES</a>
               </li>
               <li>
-                  <a href="#">Estadísticas</a>
+                  <a href="#">ESTADISTICAS</a>
               </li>
             </ul>
           </div>
         </li>
-        <li><a th:href="@{/usuario/prestamos}">Prestamos</a></li>
-        <li ><a th:href="@{/usuario/pagos}">Pagos o abonos</a></li>
+        <li><a th:href="@{/usuario/prestamos}">Mis prestamos</a></li>
+        <li ><a th:href="@{/usuario/pagos}">Mis pagos</a></li>
         <li>
-          <a th:text="${usuario.nombre}" th:href="@{/usuario/perfil}">Bienvenido </a>
+          <a th:href="@{/usuario/perfil}">¡Bienvenido <span th:text="${usuario.nombre}"></span>!</a>
           <div class="uk-navbar-dropdown">
             <ul class="uk-nav uk-navbar-dropdown-nav">
               <li>
@@ -49,12 +49,18 @@
       </ul>
     </div>
   </nav>
-  <div class="alert alert-success" th:if="${success !=null}" th:text=${success}></div>
-  <div class="alert alert-danger" th:if="${error !=null}" th:text=${error}></div>
-  <div class="alert alert-warning" th:if="${warning !=null}" th:text=${warning}></div>
-  <div class="alert alert-info" th:if="${info !=null}" th:text=${info}></div>
+  <div class="uk-alert-success" th:if="${success !=null}" th:text=${success}></div>
+  <div class="uk-alert-danger" th:if="${error !=null}" th:text=${error}></div>
+  <div class="uk-alert-warning" th:if="${warning !=null}" th:text=${warning}></div>
+  <div class="uk-alert-primary" th:if="${info !=null}" th:text=${info}></div>
 </header>
 <footer th:fragment="footer">
+  <div style="width: 100%; background: #f3f3f3;" class="uk-margin-top">
+      <div class="uk-margin uk-text-center">
+        <h3>Información de contacto</h3>
+        <p>Oswaldo Cabrera Pérez</p>
+      </div>
+  </div>
   <script th:src="@{/uikit/js/uikit.min.js}"></script>
   <script th:src="@{/uikit/js/uikit-icons.min.js}"></script>
 </footer>

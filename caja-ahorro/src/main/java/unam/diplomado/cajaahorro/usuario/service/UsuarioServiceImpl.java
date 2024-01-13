@@ -1,6 +1,8 @@
 package unam.diplomado.cajaahorro.usuario.service;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.Pageable;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Propagation;
@@ -57,6 +59,11 @@ public class UsuarioServiceImpl implements UsuarioService{
     public Usuario buscarPorId(Integer id) {
         Optional<Usuario> usuario = usuarioRepository.findById(id);
         return usuario.get();
+    }
+
+    @Override
+    public Page<Usuario> buscarTodos(Pageable pageable) {
+        return usuarioRepository.findAll(pageable);
     }
 
 }

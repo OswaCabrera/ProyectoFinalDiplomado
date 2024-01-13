@@ -9,7 +9,7 @@
         <div class="uk-section uk-section-muted uk-margin-top uk-padding-small">
             <h1>Tu perfil</h1>
             <a th:href="@{/usuario/editar-perfil}">Modificar perfil</a>
-            <div>
+            <div th:if="${usuario.fotografia != null}">
                 <img th:src="@{'/imagenes/'+${usuario.fotografia}}">
             </div>
             <div>
@@ -34,7 +34,7 @@
                 <h3>Número de cuenta: <span th:text="${cuenta.id}"></span> </h3>
             </div>
             <div>
-                <h3>Saldo: <span th:text="${cuenta.saldo}"></span> </h3>
+                <h3>Monto Ahorrado: <span th:text="${cuenta.saldo}"></span> </h3>
             </div>
             <div>
                 <h3>Fecha de apertura: <span th:text="${cuenta.fechaCreacion}"></span> </h3>

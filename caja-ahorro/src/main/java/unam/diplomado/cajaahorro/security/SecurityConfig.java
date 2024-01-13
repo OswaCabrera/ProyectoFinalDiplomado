@@ -40,6 +40,9 @@ public class SecurityConfig {
         http
                 .authorizeRequests()
                 .requestMatchers("/admin/**").hasRole("ADMIN")
+                .requestMatchers("/prestamo/**").hasRole("ADMIN")
+                .requestMatchers("/transaccion/**").hasRole("ADMIN")
+                .requestMatchers("/estadisticas/**").hasRole("ADMIN")
                 .requestMatchers("/usuario/**").hasRole("CLIENTE")
                 .requestMatchers("/", "/**").permitAll()
                 .and()

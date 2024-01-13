@@ -1,0 +1,47 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org"
+      lang="es">
+<head th:replace="plantillas/plantilla :: head"></head>
+</head>
+<body>
+    <header th:replace="plantillas/plantilla :: header"></header>
+    <main class="uk-container">
+    <div>
+      <h1>Listado de prestamos</h1>
+        <table th:if="${!prestamos.isEmpty()}" class="uk-table uk-table-striped">
+            <thead class="table-dark table-bordered">
+            <tr>
+                <th scope="col">ID</th>
+                <th scope="col">Cliente</th>
+                <th>Monto</th>
+                <th scope="col">Mensualidades</th>
+                <th scope="col">Estatus</th>
+                <th scope="col">Operaciones</th>
+            </tr>
+            </thead>
+            <tbody>
+            <tr th:each="pr: ${prestamos}">
+                <td th:text="${pr.id}"></td>
+                <td><span th:text="${pr.usuarioId.nombre}"></span> <span  th:text="${pr.usuarioId.apellidoPaterno}"></span> <span  th:text="${pr.usuarioId.apellidoMaterno}"></span></td>
+                <td th:text="${pr.montoOriginal}"></td>
+                <td th:text="${pr.mensualidades}"></td>
+                <td>
+                    <span th:if="${pr.estatusPrestamoId.id == 3}" class="uk-label uk-label-danger">Rechazado</span>
+                    <span th:if="${pr.estatusPrestamoId.id == 1}" class="uk-label uk-label-warning">Pendiente</span>
+                    <span th:if="${pr.estatusPrestamoId.id == 4}" class="uk-label uk-label-success">Pagado</span>
+                    <span th:if="${pr.estatusPrestamoId.id == 2}" class="uk-label uk-label-success">Aprobado y pagándose</span>
+                    <span th:if="${pr.estatusPrestamoId.id == 5}" class="uk-label uk-label-success">Vencido</span>
+                </td>
+                <td>
+                    <a th:href="@{/prestamo/revisar-prestamo/{id} (id=${pr.id})}"
+                       class="uk-button uk-button-primary" ><i class="fas fa-trash" aria-hidden="true"></i>Revisar prestamo</a>
+                </td>
+            </tr>
+            </tbody>
+        </table>
+        <nav th:replace="plantillas/pag-nav:: paginador"></nav>
+    </div>
+    </main>
+    <footer th:replace="plantillas/plantilla :: footer"></footer>
+</body>
+</html>

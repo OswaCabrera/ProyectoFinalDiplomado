@@ -1,0 +1,36 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org"
+      lang="es">
+<head th:replace="plantillas/plantilla :: head"></head>
+</head>
+<body>
+    <header th:replace="plantillas/plantilla :: header"></header>
+    <main class="uk-container">
+      <div>
+        <h1>Listado de usuarios</h1>
+        <table th:if="${!usuarios.isEmpty()}" class="uk-table uk-table-striped">
+            <thead class="table-dark table-bordered">
+            <tr>
+                <th scope="col">ID</th>
+                <th scope="col">Cliente</th>
+                <th>Email</th>
+                <th>Ver perfil</th>
+            </tr>
+            </thead>
+            <tbody>
+            <tr th:each="us: ${usuarios}">
+                <td th:text="${us.id}"></td>
+                <td> <span th:text="${us.nombre}"></span> <span th:text="${us.apellidoPaterno}"></span> <span th:text="${us.apellidoMaterno}"></span></td>
+                <td th:text="${us.email}"></td>
+                <td>
+                    <a th:href="@{/admin/perfil-usuario/{id} (id=${us.id})}"
+                       class="uk-button uk-button-primary" ><i class="fas fa-trash" aria-hidden="true"></i>Ver perfil del usuario</a>
+                </td>
+            </tr>
+            </tbody>
+        </table>
+      </div>
+    </main>
+    <footer th:replace="plantillas/plantilla :: footer"></footer>
+</body>
+</html>

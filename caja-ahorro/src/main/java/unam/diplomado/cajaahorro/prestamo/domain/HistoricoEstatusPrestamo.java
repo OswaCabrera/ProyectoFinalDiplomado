@@ -5,6 +5,8 @@ import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.NoArgsConstructor;
 
+import java.util.Date;
+
 @Data
 @NoArgsConstructor
 @AllArgsConstructor
@@ -16,8 +18,8 @@ public class HistoricoEstatusPrestamo {
     private Integer id;
     private Integer deuda;
     @Column(name = "fecha_actualizacion")
-    private String fechaActualizacion;
-    @JoinColumn(name = "estatus_prestamo_id")
+    private Date fechaActualizacion;
+    @JoinColumn(name = "estatus_prestamos_id")
     @ManyToOne
     private EstatusPrestamo estatusPrestamoId;
     @JoinColumn(name = "prestamo_id")

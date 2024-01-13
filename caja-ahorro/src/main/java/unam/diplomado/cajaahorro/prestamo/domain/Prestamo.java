@@ -21,6 +21,8 @@ public class Prestamo {
     private Integer montoOriginal;
     @Column(name = "monto_pagar")
     private Integer montoPagar;
+    @Column(name = "cantidad_pagada")
+    private Integer cantidadPagada;
     private Integer mensualidades;
     private Integer interes;
     @Column(name = "fecha_peticion")

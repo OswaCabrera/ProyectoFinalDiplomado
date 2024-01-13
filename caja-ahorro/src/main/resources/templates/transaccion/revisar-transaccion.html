@@ -1,0 +1,53 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org"
+      lang="es">
+<head th:replace="plantillas/plantilla :: head"></head>
+</head>
+<body>
+    <header th:replace="plantillas/plantilla :: header"></header>
+    <main class="uk-container">
+      <div>
+        <h3>Datos de la transacción</h3>
+          <div>
+            <p>ID de la transacción: <span th:text="${transaccion.id}"></span></p>
+          </div>
+          <div>
+            <p>Usuario: <span th:text="${transaccion.cuentaId.usuario.nombre}"></span> <span th:text="${transaccion.cuentaId.usuario.apellidoPaterno}"></span> <span th:text="${transaccion.cuentaId.usuario.apellidoMaterno}"></span></p>
+          </div>
+          <div>
+            <p>Monto: <span th:text="${transaccion.monto}"></span></p>
+          </div>
+        <div>
+          <p>Fecha: <span th:text="${transaccion.fecha}"></span></p>
+        </div>
+        <div>
+          <img th:src="@{'/imagenes/' + ${transaccion.comprobante}}">
+        </div>
+        <div>Tipo de transacción: <span th:text="${transaccion.tipoTransaccionId.nombre}"></span>
+        </div>
+        <div>
+          <p>Estatus: <span th:text="${transaccion.estatusTransaccionId.nombre}"></span></p>
+          <div th:if="${transaccion.estatusTransaccionId.id == 2}">
+            <form th:action="@{/transaccion/procesar-transaccion}" th:object="${transaccion}" method="post">
+              <div class="uk-margin">
+                <label for="aceptar">Aceptar pago</label>
+                <div class="input-group mb-1">
+                  <input type="radio" class="form-control" id="aceptar" name="decision" value=1>
+                </div>
+              </div>
+              <div class="uk-margin">
+                <label for="rechazar">Rechazar pago</label>
+                <div class="input-group mb-1">
+                  <input type="radio" class="form-control" id="rechazar" name="decision" value=3>
+                </div>
+              </div>
+              <input type="hidden" name="id" th:field="${transaccion.id}"/>
+              <button type="submit" class="uk-button uk-button-default">Enviar</button>
+            </form>
+          </div>
+        </div>
+      </div>
+    </main>
+    <footer th:replace="plantillas/plantilla :: footer"></footer>
+</body>
+</html>

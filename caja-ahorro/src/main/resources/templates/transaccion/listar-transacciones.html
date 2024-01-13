@@ -1,0 +1,43 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org"
+      lang="es">
+<head th:replace="plantillas/plantilla :: head"></head>
+</head>
+<body>
+    <header th:replace="plantillas/plantilla :: header"></header>
+    <main class="uk-container">
+        <h1>Historial de transacciones</h1>
+        <div>
+            <table th:if="${!transacciones.isEmpty()}" class="uk-table uk-table-striped">
+                <thead>
+<tr>
+                    <th scope="col">ID</th>
+                    <th scope="col">Cliente</th>
+                    <th scope="col">Monto</th>
+                    <th>Tipo de transacción</th>
+                    <th scope="col">Fecha</th>
+                    <th>Estatus</th>
+                    <th scope="col">Operaciones</th>
+                </tr>
+                </thead>
+                <tbody>
+                    <tr th:each="tr: ${transacciones}">
+                        <td th:text="${tr.id}"></td>
+                        <td><span th:text="${tr.cuentaId.usuario.nombre}"></span> <span  th:text="${tr.cuentaId.usuario.apellidoPaterno}"></span> <span  th:text="${tr.cuentaId.usuario.apellidoMaterno}"></span></td>
+                        <td th:text="${tr.monto}"></td>
+                        <td th:text="${tr.tipoTransaccionId.nombre}"></td>
+                        <td th:text="${tr.fecha}"></td>
+                        <td th:text="${tr.estatusTransaccionId.nombre}"></td>
+                        <td>
+                            <a th:href="@{/transaccion/revisar-transaccion/{id} (id=${tr.id})}"
+                               class="uk-button uk-button-primary" ><i class="fas fa-trash" aria-hidden="true"></i>Revisar transacción</a>
+                        </td>
+                    </tr>
+                </tbody>
+            </table>
+            <nav th:replace="plantillas/pag-nav:: paginador"></nav>
+        </div>
+    </main>
+    <footer th:replace="plantillas/plantilla :: footer"></footer>
+</body>
+</html>

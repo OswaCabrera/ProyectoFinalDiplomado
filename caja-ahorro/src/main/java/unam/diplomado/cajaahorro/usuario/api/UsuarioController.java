@@ -42,7 +42,6 @@ public class UsuarioController  {
     @Value("${ejemplo.imagen.ruta}")
     private String archivoRuta;
 
-    //A route to show the user's profile
     @RequestMapping("/perfil")
     public String profile(Model model,
                           @AuthenticationPrincipal Usuario usuario) {
@@ -52,7 +51,6 @@ public class UsuarioController  {
         return "usuario/perfil";
     }
 
-    // A route to show the list of the user's loans
     @RequestMapping("/prestamos")
     public String loans(Model model,
                         @AuthenticationPrincipal Usuario usuario) {
@@ -74,7 +72,6 @@ public class UsuarioController  {
 
     @PostMapping("/solicitar-prestamo")
     public String solicitarPrestamo(Prestamo prestamo, @AuthenticationPrincipal Usuario usuario) {
-        System.out.println("Prestamo: " + prestamo);
         prestamo.setUsuarioId(usuario);
         prestamoService.solicitarPrestamo(prestamo);
         return "redirect:/usuario/prestamos";
