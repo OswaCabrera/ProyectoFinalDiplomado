@@ -7,11 +7,18 @@
     <main class="uk-container">
         <div class="uk-card">
             <div class="uk-card-body">
+
                 <form th:action="@{/usuario/registrar-abono}" th:object="${transaccion}" method="post" enctype="multipart/form-data">
+                    <div th:if="${#fields.hasErrors('*')}" class="uk-alert-warning uk-padding" role="alert">
+                        Verifique los siguientes errores
+                        <ul class="uk-list uk-list-disc uk-list-secondary">
+                            <li th:each="err : ${#fields.errors('*')}" th:text="${err}"/>
+                        </ul>
+                    </div>
                     <div class="uk-margin">
                         <label class="uk-form-label" for="monto">Monto</label>
                         <div class="uk-form-controls">
-                            <input class="uk-input" id="monto" name="monto" type="number" th:field="*{monto}" placeholder="Monto Original" required="required"/>
+                            <input class="uk-input" id="monto" name="monto" type="number" th:field="*{monto}" placeholder="Monto que desea solicitar"/>
                         </div>
                     </div>
                     <div class="uk-margin">

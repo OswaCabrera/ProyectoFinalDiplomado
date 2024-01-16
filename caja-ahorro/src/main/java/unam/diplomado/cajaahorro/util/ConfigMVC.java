@@ -17,8 +17,8 @@ public class ConfigMVC implements WebMvcConfigurer {
     @Override
     public void addResourceHandlers(ResourceHandlerRegistry registry) {
         WebMvcConfigurer.super.addResourceHandlers(registry);
-        registry.addResourceHandler("/imagenes/**")
-                .addResourceLocations("file:/Users/oswaldocabreraperez/Documents/DiplomadoJava//imagenes//");
+        registry.addResourceHandler("/imagen/**")
+                .addResourceLocations("file:/Users/oswaldocabreraperez/Documents/ProyectoFinalDiplomado/caja-ahorro/src/main/resources/static//imagen//");
     }
     public void addViewControllers(ViewControllerRegistry registry){
         registry.addViewController("/error_403").setViewName("error_403");

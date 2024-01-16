@@ -12,7 +12,7 @@
                 <div class="uk-card uk-card-default uk-card-body">
                     <h3 class="uk-card-title">Datos personales</h3>
                     <div class="uk-card-media-top" th:if="${usuarioPerfil.fotografia != null}">
-                        <img th:src="@{'/imagenes/'+${usuarioPerfil.fotografia}}" width="200" height="200" class="uk-border-circle" >
+                        <img th:src="@{'/imagen/'+${usuarioPerfil.fotografia}}" width="200" height="200" class="uk-border-circle" >
                     </div>
                     <p>Nombre: <span th:text="${usuarioPerfil.nombre}"></span></p>
                     <p>Apellido paterno: <span th:text="${usuarioPerfil.apellidoPaterno}"></span></p>

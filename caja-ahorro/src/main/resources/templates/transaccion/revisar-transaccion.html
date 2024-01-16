@@ -21,7 +21,7 @@
           <p>Fecha: <span th:text="${transaccion.fecha}"></span></p>
         </div>
         <div>
-          <img th:src="@{'/imagenes/' + ${transaccion.comprobante}}">
+          <img th:src="@{'/imagen/' + ${transaccion.comprobante}}">
         </div>
         <div>Tipo de transacción: <span th:text="${transaccion.tipoTransaccionId.nombre}"></span>
         </div>

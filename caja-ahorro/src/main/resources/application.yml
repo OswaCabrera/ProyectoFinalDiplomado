@@ -15,7 +15,7 @@ spring:
 #ruta de archivos
 ejemplo:
   imagen:
-    ruta: /Users/oswaldocabreraperez/Documents/DiplomadoJava/imagenes
+    ruta: /Users/oswaldocabreraperez/Documents/ProyectoFinalDiplomado/caja-ahorro/src/main/resources/static/imagen
 
 server:
   port: 8080

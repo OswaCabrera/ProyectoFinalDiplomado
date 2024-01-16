@@ -26,7 +26,7 @@ public class Prestamo {
     private Integer montoPagar;
     @Column(name = "cantidad_pagada")
     private Integer cantidadPagada;
-    @Min(value = 0, message = "Debes escoger un número positivo mayor a 0")
+    @Min(value = 0, message = "Debes escoger mensualidades mayor a 0")
     private Integer mensualidades;
     private Integer interes;
     @Column(name = "fecha_peticion")

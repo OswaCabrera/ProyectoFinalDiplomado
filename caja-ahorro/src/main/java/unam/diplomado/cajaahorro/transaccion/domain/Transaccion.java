@@ -1,6 +1,7 @@
 package unam.diplomado.cajaahorro.transaccion.domain;
 
 import jakarta.persistence.*;
+import jakarta.validation.constraints.Min;
 import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.NoArgsConstructor;
@@ -20,6 +21,7 @@ public class Transaccion {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     @Column(name = "transaccion_id")
     private Integer id;
+    @Min(value = 0, message = "El monto debe ser mayor a 0")
     private Integer monto;
     private Date fecha;
     private String comprobante;

@@ -116,16 +116,30 @@ public class UsuarioController  {
     }
 
     @PostMapping("/registrar-abono")
-    public String registrarAbono(@ModelAttribute("transaccion") TransaccionAbonoAhorro transaccion, @RequestParam(value = "comprobanteImagen") MultipartFile multipartFile, @AuthenticationPrincipal Usuario usuario) {
-        System.out.println("Transaccion: " + transaccion);
+    public String registrarAbono(@Valid @ModelAttribute("transaccion") TransaccionAbonoAhorro transaccion, BindingResult result, Model model,
+                                 RedirectAttributes flash, @RequestParam(value = "comprobanteImagen") MultipartFile multipartFile, @AuthenticationPrincipal Usuario usuario) {
+        model.addAttribute("usuario", usuario);
+        if(result.hasErrors()){
+            model.addAttribute("operacion","Por favor llene todos los campos");
+            System.out.println("Por favor llene todos los campos");
+            return "usuario/registrar-pago";
+        }
         if(!multipartFile.isEmpty()){
             String imagenNombre= Archivos.almacenar(multipartFile,archivoRuta);
             if(imagenNombre!=null){
                 transaccion.setComprobante(imagenNombre);
             }
         }
-        transaccionService.guardarTransaccion(transaccion, usuario);
-        return "redirect:/usuario/pagos";
+        try {
+            transaccionService.guardarTransaccion(transaccion, usuario);
+            flash.addFlashAttribute("success","Se ha registrado con éxito la transacción. Espere a que los administradores lo revisen");
+            return "redirect:/usuario/pagos";
+        }catch (Exception e){
+            ObjectError er=new ObjectError("Error","Llene todos los campos");
+            model.addAttribute("warning","Ocurrió un error al solicitar el prestamo");
+            result.addError(er);
+        }
+        return "usuario/registrar-pago";
     }
 
     @GetMapping("/pagar-prestamo/{id}")
@@ -139,22 +153,37 @@ public class UsuarioController  {
     }
 
     @PostMapping("/pagar-prestamo")
-    public String registrarPago(@ModelAttribute("transaccion") TransaccionPagoPrestamo transaccion,@RequestParam(value = "comprobanteImagen") MultipartFile multipartFile, @AuthenticationPrincipal Usuario usuario) {
+    public String registrarPago(@Valid @ModelAttribute("transaccion") TransaccionPagoPrestamo transaccion, BindingResult result, Model model,
+                                RedirectAttributes flash, @RequestParam(value = "comprobanteImagen") MultipartFile multipartFile, @AuthenticationPrincipal Usuario usuario) {
+        model.addAttribute("usuario", usuario);
+        if(result.hasErrors()){
+            model.addAttribute("operacion","Por favor llene todos los campos");
+            System.out.println("Por favor llene todos los campos");
+            return "usuario/pagar-prestamo";
+        }
         if(!multipartFile.isEmpty()){
             String imagenNombre= Archivos.almacenar(multipartFile,archivoRuta);
             if(imagenNombre!=null){
                 transaccion.setComprobante(imagenNombre);
             }
         }
-        Transaccion tranCreada = transaccionService.guardarTransaccion(transaccion, usuario);
-        if(tranCreada.getComprobante()!=null || !tranCreada.getComprobante().isEmpty()){
-            String archivo = tranCreada.getComprobante();
-            String nuevoArchivo = tranCreada.getId()+"_"+archivo;
-            Archivos.renombrar(archivoRuta,archivo,nuevoArchivo);
-            tranCreada.setComprobante(nuevoArchivo);
-            transaccionService.actualizar(tranCreada);
+        try {
+            Transaccion tranCreada = transaccionService.guardarTransaccion(transaccion, usuario);
+            if (tranCreada.getComprobante() != null || !tranCreada.getComprobante().isEmpty()) {
+                String archivo = tranCreada.getComprobante();
+                String nuevoArchivo = tranCreada.getId() + "_" + archivo;
+                Archivos.renombrar(archivoRuta, archivo, nuevoArchivo);
+                tranCreada.setComprobante(nuevoArchivo);
+                transaccionService.actualizar(tranCreada);
+                flash.addFlashAttribute("success","Se ha registrado con éxito la transacción. Espere a que los administradores lo revisen");
+                return "redirect:/usuario/pagos";
+            }
+        }catch (Exception e){
+            ObjectError er=new ObjectError("Error","Llene todos los campos");
+            model.addAttribute("warning","Ocurrió un error al solicitar el prestamo");
+            result.addError(er);
         }
-        return "redirect:/usuario/pagos";
+        return "usuario/pagar-prestamo";
     }
 
 
