@@ -22,4 +22,14 @@ public interface PrestamoService {
 
     void actualizar(Prestamo prestamo);
 
+    Long totalPrestamos();
+
+    Long totalPrestamosActivos();
+
+    Long totalPrestamosPagados();
+
+    Long totalPrestamosRechazados();
+
+    Long interesGenerados();
+
 }

@@ -66,4 +66,9 @@ public class UsuarioServiceImpl implements UsuarioService{
         return usuarioRepository.findAll(pageable);
     }
 
+    @Override
+    public Long totalUsuarios() {
+        return usuarioRepository.count();
+    }
+
 }

@@ -9,4 +9,6 @@ public interface CuentaService {
     Cuenta buscarCuentaPorUsuario(Integer idUsuario);
 
     Cuenta actualizar(Cuenta cuenta);
+
+    Long getDineroAhorrado();
 }

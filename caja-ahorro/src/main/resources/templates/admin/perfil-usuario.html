@@ -11,11 +11,14 @@
             <div>
                 <div class="uk-card uk-card-default uk-card-body">
                     <h3 class="uk-card-title">Datos personales</h3>
-                    <p>Nombre: <span th:text="${usuario.nombre}"></span></p>
-                    <p>Apellido paterno: <span th:text="${usuario.apellidoPaterno}"></span></p>
-                    <p>Apellido materno: <span th:text="${usuario.apellidoMaterno}"></span></p>
-                    <p>Correo: <span th:text="${usuario.email}"></span></p>
-                    <p>Teléfono: <span th:text="${usuario.numeroTelefonico}"></span></p>
+                    <div class="uk-card-media-top" th:if="${usuarioPerfil.fotografia != null}">
+                        <img th:src="@{'/imagenes/'+${usuarioPerfil.fotografia}}" width="200" height="200" class="uk-border-circle" >
+                    </div>
+                    <p>Nombre: <span th:text="${usuarioPerfil.nombre}"></span></p>
+                    <p>Apellido paterno: <span th:text="${usuarioPerfil.apellidoPaterno}"></span></p>
+                    <p>Apellido materno: <span th:text="${usuarioPerfil.apellidoMaterno}"></span></p>
+                    <p>Correo: <span th:text="${usuarioPerfil.email}"></span></p>
+                    <p>Teléfono: <span th:text="${usuarioPerfil.numeroTelefonico}"></span></p>
                 </div>
                 <div class="uk-card uk-card-default uk-card-body uk-margin-top">
                     <h3 class="uk-card-title">Datos de la cuenta</h3>
@@ -30,6 +33,22 @@
                     </div>
                     <div>
                         <p>Estatus de la cuenta: <span th:text="${cuenta.estatusCuenta.nombre}"></span> </p>
+                    </div>
+                    <div>
+                        <div th:if="${cuenta.estatusCuenta.id == 1}">
+                        Desactivar cuenta:
+                            <form method="POST" th:action="@{/admin/desactivar-cuenta}">
+                                <input type="hidden" name="id" th:value="${cuenta.id}">
+                                <input type="submit" value="Desactivar cuenta"/>
+                            </form>
+                        </div>
+                        <div th:if="${cuenta.estatusCuenta.id == 2}">
+                            Desactivar cuenta:
+                            <form method="POST" th:action="@{/admin/activar-cuenta}">
+                                <input type="hidden" name="id" th:value="${cuenta.id}">
+                                <input type="submit" value="Activar cuenta"/>
+                            </form>
+                        </div>
                     </div>
                 </div>
             </div>

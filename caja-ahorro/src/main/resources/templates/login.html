@@ -20,16 +20,14 @@
 				</div>
 			</div>
 		</nav>
-		<div class="alert alert-success" th:if="${success !=null}" th:text=${success}></div>
-		<div class="alert alert-danger" th:if="${error !=null}" th:text=${error}></div>
-		<div class="alert alert-warning" th:if="${warning !=null}" th:text=${warning}></div>
-		<div class="alert alert-info" th:if="${info !=null}" th:text=${info}></div>
+		<div class="uk-alert-success" th:if="${success !=null}" th:text=${success}></div>
+		<div class="uk-alert-danger" th:if="${error !=null}" th:text=${error}></div>
+		<div class="uk-alert-warning" th:if="${warning !=null}" th:text=${warning}></div>
+		<div class="uk-alert-primary" th:if="${info !=null}" th:text=${info}></div>
 	</header>
     <main class="container text-center">
 		<div class="uk-container">
-			<h1>Login</h1>
-			<a th:href="@{/registro}">Alta Usuario</a>
-			<br/><br/>
+			<h1>Inicia sesión</h1>
 			<form method="POST" th:action="@{/autenticacion}" id="loginForm">
 				<label for="username">Usuario: </label>
 				<div class="uk-margin">
@@ -43,6 +41,9 @@
 				</div>
 				<input class="uk-button uk-button-default" type="submit" value="Login"/>
 			</form>
+			<div>
+				<a th:href="@{/registro}">Registrate</a>
+			</div>
 		</div>
     </main>
     <footer th:replace="plantillas/plantilla :: footer"></footer>

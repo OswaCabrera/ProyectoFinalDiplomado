@@ -13,4 +13,6 @@ public interface UsuarioService {
     Usuario buscarPorId(Integer id);
 
     Page<Usuario> buscarTodos(Pageable pageable);
+
+    Long totalUsuarios();
 }

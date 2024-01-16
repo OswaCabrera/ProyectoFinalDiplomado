@@ -6,10 +6,8 @@ import org.springframework.data.domain.Pageable;
 import org.springframework.security.core.annotation.AuthenticationPrincipal;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.PathVariable;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RequestParam;
+import org.springframework.web.bind.annotation.*;
+import unam.diplomado.cajaahorro.prestamo.service.PrestamoService;
 import unam.diplomado.cajaahorro.usuario.domain.Cuenta;
 import unam.diplomado.cajaahorro.usuario.domain.Usuario;
 import unam.diplomado.cajaahorro.usuario.service.CuentaService;
@@ -26,6 +24,9 @@ public class AdminUsuariosController {
     @Autowired
     private CuentaService cuentaService;
 
+    @Autowired
+    private PrestamoService prestamosService;
+
     @GetMapping("lista-usuarios")
     public String listarUsuarios(@RequestParam(name = "page", defaultValue = "0") int page , Model model,
                                  @AuthenticationPrincipal Usuario usuario){
@@ -34,6 +35,7 @@ public class AdminUsuariosController {
         Page<Usuario> usuarios = usuarioService.buscarTodos(pagReq);
         RenderPagina<Usuario> render = new RenderPagina<>("lista-usuarios", usuarios);
         model.addAttribute("usuarios", usuarios);
+        model.addAttribute("page", render);
         return "admin/lista-usuarios";
     }
 
@@ -47,4 +49,26 @@ public class AdminUsuariosController {
         model.addAttribute("cuenta", cuenta);
         return "admin/perfil-usuario";
     }
+
+    @GetMapping("estadisticas")
+    public String estadisticas(Model model,
+                               @AuthenticationPrincipal Usuario usuario){
+        Long totalUsuarios = usuarioService.totalUsuarios();
+        Long totalPrestamos = prestamosService.totalPrestamos();
+        Long totalPrestamosActivos = prestamosService.totalPrestamosActivos();
+        Long totalPrestamosPagados = prestamosService.totalPrestamosPagados();
+        Long interesGenerados = prestamosService.interesGenerados();
+        Long totalPrestamosRechazados = prestamosService.totalPrestamosRechazados();
+        Long sumaAhorros = cuentaService.getDineroAhorrado();
+        model.addAttribute("sumaAhorros", sumaAhorros);
+        model.addAttribute("totalPrestamosRechazados", totalPrestamosRechazados);
+        model.addAttribute("interesGenerados", interesGenerados);
+        model.addAttribute("totalPrestamos", totalPrestamos);
+        model.addAttribute("totalPrestamosActivos", totalPrestamosActivos);
+        model.addAttribute("totalPrestamosPagados", totalPrestamosPagados);
+        model.addAttribute("totalUsuarios", totalUsuarios);
+        model.addAttribute("usuario", usuario);
+        return "admin/estadisticas";
+    }
+
 }

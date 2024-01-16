@@ -8,16 +8,22 @@
         <h2>Solicitud de Prestamo</h2>
         <div class="uk-card uk-card-default uk-card-body">
             <form th:action="@{/usuario/solicitar-prestamo}" th:object="${prestamo}" method="post">
+                <div th:if="${#fields.hasErrors('*')}" class="uk-alert-warning uk-padding" role="alert">
+                    Verifique los siguientes errores
+                    <ul class="uk-list uk-list-disc uk-list-secondary">
+                        <li th:each="err : ${#fields.errors('*')}" th:text="${err}"/>
+                    </ul>
+                </div>
                 <div class="uk-margin">
                     <label class="uk-form-label" for="montoOriginal">Monto</label>
                     <div class="uk-form-controls">
-                        <input class="uk-input" id="montoOriginal" name="montoOriginal" type="number" th:field="*{montoOriginal}" placeholder="Monto Original" required="required"/>
+                        <input class="uk-input" id="montoOriginal" name="montoOriginal" type="number" th:field="*{montoOriginal}" placeholder="Monto que desa solicitar" />
                     </div>
                 </div>
                 <div class="uk-margin">
-                    <label class="uk-form-label" for="mensualidades">Número de meses</label>
+                    <label class="uk-form-label" for="mensualidades">Número de meses en que desea pagar su prestamo</label>
                     <div class="uk-form-controls">
-                        <input class="uk-input" id="mensualidades" name="mensualidades" type="number" th:field="*{mensualidades}" placeholder="Mensualidades" required="required"/>
+                        <input class="uk-input" id="mensualidades" name="mensualidades" type="number" th:field="*{mensualidades}" placeholder="Mensualidades" />
                     </div>
                 </div>
                 <div class="uk-alert-warning" uk-alert>

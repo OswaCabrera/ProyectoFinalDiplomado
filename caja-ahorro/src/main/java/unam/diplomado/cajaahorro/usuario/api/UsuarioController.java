@@ -2,13 +2,17 @@ package unam.diplomado.cajaahorro.usuario.api;
 
 
 import jakarta.servlet.http.HttpSession;
+import jakarta.validation.Valid;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.security.core.annotation.AuthenticationPrincipal;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
+import org.springframework.validation.BindingResult;
+import org.springframework.validation.ObjectError;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.multipart.MultipartFile;
+import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 import unam.diplomado.cajaahorro.prestamo.domain.Prestamo;
 import unam.diplomado.cajaahorro.prestamo.service.PrestamoService;
 import unam.diplomado.cajaahorro.transaccion.domain.Transaccion;
@@ -45,7 +49,8 @@ public class UsuarioController  {
     @RequestMapping("/perfil")
     public String profile(Model model,
                           @AuthenticationPrincipal Usuario usuario) {
-        model.addAttribute("usuario", usuario);
+        Usuario usuarioObject = usuarioService.buscarPorId(usuario.getId());
+        model.addAttribute("usuario", usuarioObject);
         Cuenta cuenta = cuentaService.buscarCuentaPorUsuario(usuario.getId());
         model.addAttribute("cuenta", cuenta);
         return "usuario/perfil";
@@ -71,10 +76,25 @@ public class UsuarioController  {
     }
 
     @PostMapping("/solicitar-prestamo")
-    public String solicitarPrestamo(Prestamo prestamo, @AuthenticationPrincipal Usuario usuario) {
-        prestamo.setUsuarioId(usuario);
-        prestamoService.solicitarPrestamo(prestamo);
-        return "redirect:/usuario/prestamos";
+    public String solicitarPrestamo(@Valid @ModelAttribute("prestamo") Prestamo prestamo,  BindingResult result, Model model,
+                                    RedirectAttributes flash, @AuthenticationPrincipal Usuario usuario) {
+        model.addAttribute("usuario", usuario);
+        if(result.hasErrors()){
+            model.addAttribute("operacion","Por favor llene todos los campos");
+            System.out.println("Por favor llene todos los campos");
+            return "usuario/solicitar-prestamo";
+        }
+        try {
+            prestamo.setUsuarioId(usuario);
+            prestamoService.solicitarPrestamo(prestamo);
+            flash.addFlashAttribute("success","Se ha registrado con éxito el prestamo. Espere a que los administradores lo revisen");
+            return "redirect:/usuario/prestamos";
+        }catch (Exception e){
+            ObjectError er=new ObjectError("Error","Error en la solicitud del prestamo");
+            model.addAttribute("warning","Ocurrió un error al solicitar el prestamo");
+            result.addError(er);
+        }
+        return "usuario/solicitar-prestamo";
     }
 
     @GetMapping("/pagos")
@@ -139,7 +159,10 @@ public class UsuarioController  {
 
 
     @PostMapping("/editar-perfil")
-    public String editarPerfil(@ModelAttribute("usuarioObject") Usuario usuarioObject, @RequestParam(value = "fotografiaPerfil") MultipartFile multipartFile, @AuthenticationPrincipal Usuario usuario) {
+    public String editarPerfil(@Valid @ModelAttribute("usuarioObject") Usuario usuarioObject,
+                               @RequestParam(value = "fotografiaPerfil") MultipartFile multipartFile,
+                               @AuthenticationPrincipal Usuario usuario, BindingResult result, Model model,
+                               RedirectAttributes flash) {
         if(!multipartFile.isEmpty()){
             String imagenNombre= Archivos.almacenar(multipartFile,archivoRuta);
             if(imagenNombre!=null){
@@ -147,9 +170,16 @@ public class UsuarioController  {
                 Archivos.renombrar(archivoRuta,imagenNombre,usuarioObject.getFotografia());
             }
         }
-        System.out.println("Mi UsuarioObject: " + usuarioObject);
-        usuarioService.actualizar(usuarioObject);
-        return "redirect:/usuario/perfil";
+        try {
+            usuarioService.actualizar(usuarioObject);
+            flash.addFlashAttribute("success","Tus datos se han actualizado con éxito. Vuelve a iniciar sesión para ver los cambios");
+            return "redirect:/usuario/perfil";
+        }catch (Exception e){
+            ObjectError er=new ObjectError("Duplicados","Teléfono o correo ya existe");
+            model.addAttribute("warning","Correo o teléfono repetido");
+            result.addError(er);
+        }
+        return "usuario/editar-perfil";
     }
 
     @GetMapping("/editar-perfil")

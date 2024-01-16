@@ -1,0 +1,39 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org"
+      lang="es">
+<head th:replace="plantillas/plantilla :: head"></head>
+<body>
+    <header th:replace="plantillas/plantilla :: header"></header>
+    <main class="uk-container">
+        <div>
+            <h1>Usuarios</h1>
+            <p>Total de usuarios: <span th:text="${totalUsuarios}"></span></p>
+        </div>
+        <div>
+            <h1>Prestamos</h1>
+            <div>
+                <p>Total de prestamos registrados: <span th:text="${totalPrestamos}"></span></p>
+            </div>
+            <div>
+                <p>Total de prestamos activos: <span th:text="${totalPrestamosActivos}"></span></p>
+            </div>
+            <div>
+                <p>Total de prestamos finalizados: <span th:text="${totalPrestamosPagados}"></span></p>
+            </div>
+            <div>
+                <p>Intereses Generados en dinero: <span th:text="${interesGenerados}"></span></p>
+            </div>
+            <div>
+                <p>Prestamos rechazados <span th:text="${totalPrestamosRechazados}"></span></p>
+            </div>
+        </div>
+        <div>
+            <h1>Dinero ahorrado</h1>
+            <div>
+                <p>Total de dinero ahorrado: <span th:text="${sumaAhorros}"></span></p>
+            </div>
+        </div>
+    </main>
+    <footer th:replace="plantillas/plantilla :: footer"></footer>
+</body>
+</html>

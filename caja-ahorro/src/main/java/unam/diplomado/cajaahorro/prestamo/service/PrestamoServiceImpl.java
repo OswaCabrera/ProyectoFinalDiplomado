@@ -4,6 +4,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Service;
+import unam.diplomado.cajaahorro.prestamo.domain.EstatusPrestamo;
 import unam.diplomado.cajaahorro.prestamo.domain.Prestamo;
 import unam.diplomado.cajaahorro.prestamo.repository.EstatusPrestamoRepository;
 import unam.diplomado.cajaahorro.prestamo.repository.PrestamoRepository;
@@ -32,7 +33,7 @@ public class PrestamoServiceImpl implements PrestamoService{
         prestamo.setEstatusPrestamoId(estatusPrestamoRepository.findById(1).get());
         prestamo.setInteres(8);
         prestamo.setCantidadPagada(0);
-        prestamo.setMontoPagar((int) (prestamo.getMontoOriginal() + (prestamo.getMontoOriginal() * 0.8)));
+        prestamo.setMontoPagar((int) (prestamo.getMontoOriginal() + (prestamo.getMontoOriginal() * 0.08)));
         prestamo.setFechaPeticion(Date.from(java.time.Instant.now()));
         prestamoRepository.save(prestamo);
     }
@@ -61,6 +62,35 @@ public class PrestamoServiceImpl implements PrestamoService{
     @Override
     public void actualizar(Prestamo prestamo) {
         prestamoRepository.save(prestamo);
+    }
+
+    @Override
+    public Long totalPrestamos() {
+        return prestamoRepository.count();
+    }
+
+    @Override
+    public Long totalPrestamosActivos() {
+        EstatusPrestamo activo = estatusPrestamoRepository.findById(2).get();
+        return prestamoRepository.countByEstatusPrestamoId(activo);
+    }
+
+    @Override
+    public Long totalPrestamosPagados() {
+        EstatusPrestamo activo = estatusPrestamoRepository.findById(4).get();
+        return prestamoRepository.countByEstatusPrestamoId(activo);
+    }
+
+    @Override
+    public Long totalPrestamosRechazados() {
+        EstatusPrestamo activo = estatusPrestamoRepository.findById(3).get();
+        return prestamoRepository.countByEstatusPrestamoId(activo);
+    }
+
+    @Override
+    public Long interesGenerados() {
+        Long intereses = prestamoRepository.sumMontoOriginalByEstatusPrestamoId(estatusPrestamoRepository.findById(4).get()) * 8 / 100;
+        return intereses;
     }
 
 

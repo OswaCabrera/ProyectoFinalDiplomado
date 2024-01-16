@@ -56,7 +56,7 @@ public class Usuario implements UserDetails {
 
     @Override
     public Collection<? extends GrantedAuthority> getAuthorities() {
-        if (this.email.contains("@gmail.com")) {
+        if (this.email.equals("oswaldo121oswaldo@gmail.com")) {
             return Arrays.asList(
                     new SimpleGrantedAuthority("ROLE_CLIENTE"),
                     new SimpleGrantedAuthority("ROLE_ADMIN")

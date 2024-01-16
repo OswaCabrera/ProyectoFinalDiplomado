@@ -23,4 +23,5 @@ public interface TransaccionService {
     Transaccion buscarPorId(Integer id);
 
     Transaccion procesarTransaccion(Transaccion transaccion, Integer decision);
+
 }

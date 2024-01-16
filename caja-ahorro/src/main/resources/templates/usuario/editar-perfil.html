@@ -7,21 +7,27 @@
     <main class="uk-container">
       <div>
           <form method="POST" th:object="${usuarioObject}" th:action="@{/usuario/editar-perfil}" enctype="multipart/form-data">
+              <div th:if="${#fields.hasErrors('*')}" class="uk-alert-warning uk-padding" role="alert">
+                  Verifique los siguientes errores
+                  <ul class="uk-list uk-list-disc uk-list-secondary">
+                      <li th:each="err : ${#fields.errors('*')}" th:text="${err}"/>
+                  </ul>
+              </div>
               <h3>Datos Personales</h3>
               <label for="usuarioObject.nombre">Nombre: </label>
-              <input type="text" class="uk-input" th:field="${usuarioObject.nombre}"/>
+              <input type="text" class="uk-input" th:field="*{nombre}"/>
               <br/>
               <label for="usuarioObject.apellidoPaterno">Apellido Paterno: </label>
-              <input type="text" class="uk-input" th:field="${usuarioObject.apellidoPaterno}"/>
+              <input type="text" class="uk-input" th:field="*{apellidoPaterno}"/>
               <br/>
               <label for="usuarioObject.apellidoMaterno">Apellido Materno: </label>
-              <input type="text" class="uk-input" th:field="${usuarioObject.apellidoMaterno}"/>
+              <input type="text" class="uk-input" th:field="*{apellidoMaterno}"/>
               <br/>
               <label for="usuarioObject.email">Email: </label>
-              <input type="text" class="uk-input" th:field="${usuarioObject.email}"/>
+              <input type="text" class="uk-input" th:field="*{email}"/>
               <br/>
               <label for="usuarioObject.numeroTelefonico">Número Telefónico: </label>
-              <input type="text" class="uk-input" th:field="${usuarioObject.numeroTelefonico}"/>
+              <input type="text" class="uk-input" th:field="*{numeroTelefonico}"/>
               <br/>
               <div class="uk-margin">
                   <label for="fotografiaPerfil">Subir fotografía</label>
@@ -32,6 +38,7 @@
               <input type="hidden" name="password" th:field="${usuarioObject.password}"/>
               <input type="hidden" name="rol" th:field="${usuarioObject.rol}"/>
               <input type="hidden" name="id" th:field="${usuarioObject.id}"/>
+              <input type="hidden" name="fotografia" th:field="${usuarioObject.fotografia}"/>
               <button type="submit" class="uk-button uk-button-default">Enviar</button>
           </form>
       </div>

@@ -24,4 +24,9 @@ public class CuentaServiceImpl implements CuentaService{
     public Cuenta actualizar(Cuenta cuenta) {
         return cuentaRepository.save(cuenta);
     }
+
+    @Override
+    public Long getDineroAhorrado() {
+        return cuentaRepository.sumSaldo();
+    }
 }
