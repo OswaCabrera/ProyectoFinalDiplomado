@@ -1,3 +1,7 @@
+
+use caja_ahorro_bd;
+
+
 INSERT INTO caja_ahorro_bd.ESTATUS_CUENTA (NOMBRE, DESCRIPCION) VALUES ('Activa', 'La cuenta está activa y en buen estado.');
 INSERT INTO caja_ahorro_bd.ESTATUS_CUENTA (NOMBRE, DESCRIPCION) VALUES ('Inactiva', 'La cuenta ha sido desactivada temporalmente.');
 INSERT INTO caja_ahorro_bd.ESTATUS_CUENTA (NOMBRE, DESCRIPCION) VALUES ('Pendiente', 'La cuenta está pendiente de aprobación.');

@@ -1,3 +1,10 @@
+SET NAMES 'UTF8MB4';
+DROP DATABASE IF EXISTS caja_ahorro_bd;
+CREATE DATABASE IF NOT EXISTS caja_ahorro_bd DEFAULT CHARACTER SET UTF8MB4;
+
+use caja_ahorro_bd;
+
+
 create table if not exists ESTATUS_CUENTA
 (
     ESTATUS_CUENTA_ID int auto_increment
